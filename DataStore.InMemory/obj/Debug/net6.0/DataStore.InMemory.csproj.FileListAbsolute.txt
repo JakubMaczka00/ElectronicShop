@@ -1,0 +1,17 @@
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\bin\Debug\net6.0\DataStore.InMemory.deps.json
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\bin\Debug\net6.0\DataStore.InMemory.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\bin\Debug\net6.0\DataStore.InMemory.pdb
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\bin\Debug\net6.0\MainBusiness.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\bin\Debug\net6.0\UseCases.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\bin\Debug\net6.0\UseCases.pdb
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\bin\Debug\net6.0\MainBusiness.pdb
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\obj\Debug\net6.0\DataStore.InMemory.csproj.AssemblyReference.cache
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\obj\Debug\net6.0\DataStore.InMemory.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\obj\Debug\net6.0\DataStore.InMemory.AssemblyInfoInputs.cache
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\obj\Debug\net6.0\DataStore.InMemory.AssemblyInfo.cs
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\obj\Debug\net6.0\DataStore.InMemory.csproj.CoreCompileInputs.cache
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\obj\Debug\net6.0\DataStore.InMemory.csproj.CopyComplete
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\obj\Debug\net6.0\DataStore.InMemory.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\obj\Debug\net6.0\refint\DataStore.InMemory.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\obj\Debug\net6.0\DataStore.InMemory.pdb
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\DataStore.InMemory\obj\Debug\net6.0\ref\DataStore.InMemory.dll
