@@ -1,0 +1,58 @@
+﻿@page "/editcategory/{categoryId}"
+@attribute [Authorize(Policy ="AdminOnly")]
+@inject NavigationManager NavigationManager
+@inject UseCases.IAddCategoryofUseCase AddCategoryofUseCase
+@inject UseCases.IGetCategoryByIdofUseCase GetCategoryByIdofUseCase
+@inject UseCases.IEditCategoryofUseCase EditCategoryofUseCase
+<h3>Edytuj kategorię produktów</h3>
+@if (category != null)
+{
+    <EditForm Model="category" class="form-inline" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+        <div class="form-group">
+            <label for="name">Nazwa kategorii</label>
+            <InputText id="name" @bind-Value="category.Name" class="form-control"></InputText>
+        </div>
+        <div class="form-group">
+            <label for="description">Opis</label>
+            <InputText id="description" @bind-Value="category.Description" class="form-control"></InputText>
+        </div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+        <button type="button" class="btn btn-primary" @onclick="OnClickCancel">Anuluj</button>
+    </EditForm>
+    
+}
+
+@code {
+    [Parameter]
+    public string CategoryId { get; set; }
+
+    private Category category;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+    }
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        // konwersja do inta
+        if(int.TryParse(this.CategoryId, out int intCategoryId))
+        {
+            var cat = GetCategoryByIdofUseCase.Execute(intCategoryId);
+            // przypadek gdy chcemy edytowac dodana kategorie
+            this.category = new Category { CategoryId = cat.CategoryId, Name = cat.Name, Description = cat.Description }; 
+
+        }
+    }
+    private void OnValidSubmit()
+    {
+        EditCategoryofUseCase.Execute(this.category);
+        NavigationManager.NavigateTo("/categories");
+    }
+    private void OnClickCancel()
+    {
+        NavigationManager.NavigateTo("/categories");
+    }
+}

@@ -1,0 +1,73 @@
+﻿
+@page "/categories"
+@attribute [Authorize(Policy ="AdminOnly")]
+
+@inject NavigationManager NavigationManager
+@inject UseCases.IViewCategoriesofUseCase ViewCategoryofUseCase
+@inject UseCases.IDeleteCategoryofUseCase DeleteCategoryofUseCase
+
+
+<h3>Zarządzaj kategoriami</h3>
+@if (categories!=null)
+{
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Kategoria</th>
+                    <th>Opis</th>
+                    <th> </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var category in categories)
+                {
+                    <tr>
+                        <td> @category.Name</td>
+                        <td> @category.Description</td>
+                        <td> 
+                            <button type="button" @onclick="@(()=>EditCategory(category))" class="btn btn-link"> Edytuj kategorię </button>
+                            <button type="button" @onclick="@(()=>DeleteCategory(category.CategoryId))" class="btn btn-link"> Usuń kategorię </button>
+                        </td>
+                       
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    }
+    <br/>
+    <button typ="button" @onclick="OnClickAddCategory" class="btn btn-primary"> Dodaj kategorię</button>
+
+}
+
+@code {
+    private List<Category> categories;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        LoadCategories();
+
+    }
+    private void OnClickAddCategory()
+    {
+        NavigationManager.NavigateTo("/add_category");
+    }
+    private void EditCategory(Category category)
+    {
+        NavigationManager.NavigateTo($"/editcategory/{category.CategoryId}");   
+    }
+    private void DeleteCategory(int categoryId)
+    {
+        DeleteCategoryofUseCase.Delete(categoryId);
+        LoadCategories();
+    }
+    private void LoadCategories()
+    {
+        categories = ViewCategoryofUseCase.Execute()?.ToList();
+    }
+
+}

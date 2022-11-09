@@ -1,0 +1,94 @@
+﻿@page "/transactions"
+@attribute [Authorize(Policy ="AdminOnly")]
+@inject IJSRuntime JSRuntime
+@inject UseCases.IGetTransactionListofUseCase GetTransactionListofUseCase
+<div class="row">
+    <div class="col-2"> 
+        <label for="seller">Nazwa sprzedającego</label>
+        <input type="text" id="seller" class="form-control" @bind-value="sellerName"/>
+    </div>
+    <div class="col-3"> 
+        <label for="startdate">Od</label>
+        <input type="date" id="startdate" class="form-control" @bind-value="startDate"/>
+    </div>
+    <div class="col-3"> 
+        <label for="enddate">Do</label>
+        <input type="date" id="enddate" class="form-control" @bind-value="endDate"/>
+    </div>
+    <div class="col-2">
+        <label> &nbsp;</label>
+        <button type="button" class="btn btn-primary" @onclick="LoadTransactions">Szukaj transakcji</button>
+    </div>
+    <div class="col-2">
+        <label>&nbsp;</label>
+        <button type="button" class="btn btn-primary" @onclick="PrintTransactions">Drukuj transakcje</button>
+    </div>
+    
+</div>
+<br />
+@if (transactions != null)
+{
+    <div id="areaofprinting">
+    <table class="table">
+        <thead>
+            <tr>
+                <th> Nazwa sprzedawcy</th>
+                <th> Nazwa produktu</th>
+                <th> Data wykonania transakcji</th>
+                <th> Sprzedane sztuki</th>
+                <th>Pozostała ilość produktu</th>
+                <th>Cena za sztukę</th>
+                <th>Kwota transakcji</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var trans in transactions)
+            {
+                <tr>
+                    <td>@trans.SellerName</td>
+                    <td>@trans.ProductName</td>
+                    <td>@trans.TimeStamp.ToString("MM/dd")</td>
+                    <td>@trans.SoldQuantity</td>
+                    <td>@(trans.PreQuantity)</td>
+                    <td>@string.Format("{0:c}",trans.Price)</td>
+                    <td colspan="2" style="text-align:right">@string.Format("{0:c}", trans.SoldQuantity*trans.Price)</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" > &nbsp;</td>
+                <td>
+                    <b> Całkowita kwota:</b>
+                </td>
+                 <td style="text-align:right">
+                     <b>
+                     @(string.Format("{0:c}", transactions.Sum(x=>x.Price*x.SoldQuantity)))
+                     </b>
+                </td>
+                
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+}
+@code {
+    private string sellerName;
+    private DateTime startDate;
+    private DateTime endDate;
+    private IEnumerable <Transaction> transactions;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        startDate = DateTime.Today;
+        endDate = DateTime.Today;
+    }
+    private void LoadTransactions()
+    {
+        transactions=GetTransactionListofUseCase.Execute(sellerName, startDate, endDate);
+    }
+    private void PrintTransactions()
+    {
+        JSRuntime.InvokeVoidAsync("print");
+    }
+}

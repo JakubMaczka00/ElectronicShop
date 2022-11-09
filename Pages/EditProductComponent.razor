@@ -1,0 +1,76 @@
+﻿@page "/edit_product/{productId}"
+@attribute [Authorize(Policy ="AdminOnly")]
+@inject NavigationManager NavigationManager
+@inject UseCases.IAddProductofUseCase AddProductofUseCase
+@inject UseCases.IGetProductbyIdofUseCase GetProductByIdofUseCase
+@inject UseCases.IEditProductsofUseCase EditProductofUseCase
+@inject UseCases.IViewCategoriesofUseCase ViewCategoriesofUseCase
+<h3>Edytuj produkt</h3>
+@if (product != null)
+{
+    <EditForm Model="product" class="form-inline" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+        <div class="form-group">
+            <label for="name">Nazwa produktu</label>
+            <InputText id="name" @bind-Value="product.Name" class="form-control"></InputText>
+        </div>
+          <div class="form-group">
+           <label for="category">Kategoria produktu</label>
+           <select id="category" @bind="product.CategoryId" class="form-select">
+               <option selected></option>
+               @foreach(var cat in categories)
+                {
+                    <option value="@cat.CategoryId">@cat.Name</option>
+                }
+
+           </select>
+        </div>
+        <div class="form-group">
+            <label for="price">Cena</label>
+            <InputNumber id="price" min=1; @bind-Value="product.Price" @bind-Value:format="F2" class="form-control"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Ilość</label>
+            <InputNumber id="quantity" min=1; @bind-Value="product.Quantity"  class="form-control"></InputNumber>
+        </div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+        <button type="button" class="btn btn-primary" @onclick="OnClickCancel">Anuluj</button>
+    </EditForm>
+    
+}
+
+@code {
+    [Parameter]
+    public string ProductId { get; set; }
+     private IEnumerable<Category> categories;
+
+    private Product product;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        categories = ViewCategoriesofUseCase.Execute();
+    }
+ 
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        // konwersja do inta
+        if(int.TryParse(this.ProductId, out int intProductId))
+        {
+            var pro = GetProductByIdofUseCase.Execute(intProductId);
+            // przypadek gdy chcemy edytowac dodany produkt
+            this.product = new Product { ProductId = pro.ProductId, Name = pro.Name, CategoryId = pro.CategoryId, Quantity = pro.Quantity,Price = pro.Price }; 
+
+        }
+    }
+    private void OnValidSubmit()
+    {
+        EditProductofUseCase.Execute(this.product);
+        NavigationManager.NavigateTo("/products");
+    }
+    private void OnClickCancel()
+    {
+        NavigationManager.NavigateTo("/products");
+    }
+}

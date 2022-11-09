@@ -1,0 +1,39 @@
+﻿@inject UseCases.IGetTodayTransactionListofUseCase GetTodayTransactionListUseCase
+@if(transactions!=null)
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th> Nazwa sprzedawcy</th>
+            <th> Nazwa produktu</th>
+            <th> Data wykonania transakcji</th>
+            <th> Sprzedane sztuki</th>
+            <th>Pozostała ilość produktu</th>
+            <th>Kwota transakcji</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var trans in transactions)
+            {
+                <tr>
+                    <td>@trans.SellerName</td>
+                    <td>@trans.ProductName</td>
+                    <td>@trans.TimeStamp.ToString("MM/dd")</td>
+                    <td>@trans.SoldQuantity</td>
+                    <td>@(trans.PreQuantity)</td>
+                    <td>@string.Format("{0:c}", trans.SoldQuantity*trans.Price)</td>
+                </tr>
+            }
+        </tbody>
+</table>
+}
+
+@code {
+    private IEnumerable<Transaction> transactions;
+    public void LoadTransactions(string sellerName)
+    {
+        transactions=GetTodayTransactionListUseCase.Execute(sellerName);
+        StateHasChanged();
+    }
+
+}

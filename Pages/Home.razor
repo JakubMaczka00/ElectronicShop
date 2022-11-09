@@ -1,0 +1,143 @@
+﻿@page "/"
+
+@inject NavigationManager NavigationManager
+@inject UseCases.IViewProductsofUseCase ViewProductsofUseCase
+@inject UseCases.IGetCategoryByIdofUseCase GetCategoryByIdOfUseCase
+@inject UseCases.IDeleteProductofUseCase DeleteProductofUseCase
+@inject IJSRuntime JSRuntime
+
+
+<h3>Sprawdź naszą ofertę</h3>
+<BSCarousel HasControls="true" HasIndicators="true">
+    <BSCarouselItem>
+        <img src="\images\karty_graficzne.jpg"/>
+        <BSCarouselCaption Class="d-none d-md-block">
+            <h5>Karty graficzne</h5>
+            <p>Sprawdź najnowsze karty graficzne</p>
+        </BSCarouselCaption>
+    </BSCarouselItem>
+    <BSCarouselItem>
+        <img src="\images\klawiatury.jpg" />
+        <BSCarouselCaption Class="d-none d-md-block">
+            <h5>Klawiatury</h5>
+            <p>Wybieraj spośród wielu klawiatur</p>
+        </BSCarouselCaption>
+    </BSCarouselItem>
+    <BSCarouselItem>
+        <img src="/images/laptopy.jpg" />
+        <BSCarouselCaption Class="d-none d-md-block">
+            <h5>Laptopy </h5>
+            <p>Laptopy od wielu producentów</p>
+        </BSCarouselCaption>
+    </BSCarouselItem>
+    <BSCarouselItem>
+        <img src="/images/słuchawki.jpg" />
+        <BSCarouselCaption Class="d-none d-md-block">
+            <h5>Słuchawki </h5>
+            <p>Najnowsze słuchawki Roccat już w sprzedaży</p>
+        </BSCarouselCaption>
+    </BSCarouselItem>
+</BSCarousel>
+<br />
+@if (products != null)
+{
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Kategoria</th>
+                    <th>Nazwa</th>
+                    <th>Cena</th>
+                    <th> </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var product in products)
+                {
+                    <tr>
+                        <td> @GetCategoryByIdOfUseCase.Execute(product.CategoryId.Value)?.Name</td>
+                        <td> @product.Name</td>
+                        <td> @(Math.Round(product.Price.Value,2))</td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    }
+}
+<br />
+<h3>Sprawdź lokalizację naszych sklepów</h3>
+<div id="map" style="height:500px;width:100%;">
+</div>
+<br />
+<br />
+
+@code {
+     protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initialize", null); 
+        }
+    }
+    
+    IList<Image> images = new List<Image>
+        {
+                    new Image{
+                        Source="/images/1.jpg",
+                        Alt="First Slide",
+                        Caption="Slide 1",
+                        Header="Slide 1 Header"
+                              },
+                     new Image{
+                        Source="/images/2.jpg",
+                        Alt="Second Slide",
+                        Caption="Slide 2",
+                        Header="Slide 2 Header"
+                              },
+                     new Image{
+                        Source="/images/3.jpg",
+                        Alt="Third Slide",
+                        Caption="Slide 3",
+                        Header="Slide 3 Header"
+                              },
+                     new Image{
+                        Source="/images/4.jpg",
+                        Alt="Fourth Slide",
+                        Caption="Slide 4",
+                        Header="Slide 4 Header"
+                              },
+                     new Image{
+                        Source="/images/5.jpg",
+                        Alt="Fifth Slide",
+                        Caption="Slide 5",
+                        Header="Slide 5 Header"
+                              }
+        };
+    class Image
+    {
+        public string Source { get; set; } = "";
+        public string Alt { get; set; } = "";
+        public string Caption { get; set; } = "";
+        public string Header { get; set; } = "";
+    }
+
+    private IEnumerable<Product> products;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        products = ViewProductsofUseCase.Execute();
+
+
+    }
+
+    private void LoadProducts()
+    {
+        products = ViewProductsofUseCase.Execute()?.ToList();
+    }
+}
+

@@ -1,0 +1,61 @@
+﻿@page "/add_product"
+@attribute [Authorize(Policy ="AdminOnly")]
+@inject NavigationManager NavigationManager
+@inject UseCases.IAddProductofUseCase AddProductofUseCase
+@inject UseCases.IGetCategoryByIdofUseCase GetCategoryByIdOfUseCase
+@inject UseCases.IViewCategoriesofUseCase ViewCategoriesofUseCase
+<h3>Dodaj produkt</h3>
+@if (product != null)
+{
+    <EditForm Model="product" class="form-inline" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+        <div class="form-group">
+            <label for="name">Nazwa produktu</label>
+            <InputText id="name" @bind-Value="product.Name" class="form-control"></InputText>
+        </div>
+        <div class="form-group">
+           <label for="category">Kategoria produktu</label>
+           <select id="category" @bind="product.CategoryId" class="form-select">
+               <option selected></option>
+               @foreach(var cat in categories)
+                {
+                    <option value="@cat.CategoryId">@cat.Name</option>
+                }
+
+           </select>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Ilość</label>
+            <InputNumber id="quantity" min="1" @bind-Value="product.Quantity" class="form-control"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="price">Cena</label>
+            <InputNumber id="price" min="0" @bind-Value="product.Price" @bind-Value:format="F2" class="form-control"></InputNumber>
+        </div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+        <button type="button" class="btn btn-primary" @onclick="OnClickCancel">Anuluj</button>
+    </EditForm>
+    
+}
+
+
+@code {
+    private IEnumerable<Category> categories;
+    private Product product;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        product = new Product();
+        categories = ViewCategoriesofUseCase.Execute();
+    }
+    private void OnValidSubmit()
+    {
+        AddProductofUseCase.Execute(product);
+        NavigationManager.NavigateTo("/products");
+    }
+    private void OnClickCancel()
+    {
+        NavigationManager.NavigateTo("/products");
+    }
+}

@@ -1,0 +1,75 @@
+﻿@page "/products"
+@attribute [Authorize(Policy ="AdminOnly")]
+@inject NavigationManager NavigationManager
+@inject UseCases.IViewProductsofUseCase ViewProductsofUseCase
+@inject UseCases.IGetCategoryByIdofUseCase GetCategoryByIdOfUseCase
+@inject UseCases.IDeleteProductofUseCase DeleteProductofUseCase
+
+<h3>Zarządzaj towarem</h3>
+<br />
+@if (products != null)
+{
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Kategoria</th>
+                    <th>Nazwa</th>
+                    <th>Ilość</th>
+                    <th>Cena</th>
+                    <th> </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var product in products)
+                {
+                    <tr>
+                        <td> @GetCategoryByIdOfUseCase.Execute(product.CategoryId.Value)?.Name</td>
+                        <td> @product.Name</td>
+                        <td> @product.Quantity</td>
+                        <td> @(Math.Round(product.Price.Value,2))</td>
+                        <td>
+                            <button type="button" class="btn btn-link" @onclick="@(()=>OnClickEditProduct(product))">Edytuj Produkt</button>
+                            &nbsp;
+                            <button type="button" @onclick="@(()=>OnClickDeleteProduct(product.ProductId))" class="btn btn-link"> Usuń Produkt </button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    }
+}
+<button typ="button" @onclick="OnClickAddProduct" class="btn btn-primary"> Dodaj produkt</button>
+@code {
+    private IEnumerable<Product> products;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        products = ViewProductsofUseCase.Execute();
+
+
+    }
+    private void OnClickAddProduct()
+    {
+        NavigationManager.NavigateTo("/add_product");
+    }
+    private void OnClickEditProduct(Product product)
+    {
+        NavigationManager.NavigateTo($"/edit_product/{product.ProductId}");
+    }
+
+    private void OnClickDeleteProduct(int productId)
+    {
+        DeleteProductofUseCase.DeleteProduct(productId);
+        LoadProducts();
+    }
+    private void LoadProducts()
+    {
+        products = ViewProductsofUseCase.Execute()?.ToList();
+    }
+}

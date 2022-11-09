@@ -1,0 +1,79 @@
+﻿@inject UseCases.IGetProductbyIdofUseCase GetProductByIdOfUseCase
+@inject UseCases.ISellProductOfUseCase SellProductOfUseCase
+
+@if (sellingProduct != null)
+{
+    <EditForm Model="sellingProduct" OnValidSubmit="SellProduct">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
+    <div class="form-group">
+        <label for="name"> Nazwa produktu</label>
+        <input class="form-control" id="name" type="text" readonly value="@sellingProduct.Name"/>
+    </div>
+     <div class="form-group">
+        <label for="price"> Cena</label>
+        <input class="form-control" id="price" type="text" readonly value="@(string.Format("{0:c}",sellingProduct.Price))"/>
+    </div>
+    <div class="form-group">
+        <label for="quantity"> Ilość</label>
+        <InputNumber id="qty" min=0 @bind-Value="@sellingProduct.Quantity" class="form-control"/>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Potwierdź transakcję</button>
+    </EditForm>
+    @if (!string.IsNullOrWhiteSpace(errorMessage))
+    {
+        <br />
+        <div class="alert alert-danger">@errorMessage</div>
+
+    }
+    
+}
+@code {
+    private Product sellingProduct;
+    private string errorMessage;
+    [Parameter]
+    public string SellerName { get; set; }
+    [Parameter]
+    public Product SelectedProduct { get; set; }
+    [Parameter]
+    public EventCallback<Product> OnProductSold { get; set; }
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if(SelectedProduct!=null){
+            sellingProduct = new Product { ProductId=SelectedProduct.ProductId, Name = SelectedProduct.Name, CategoryId = SelectedProduct.CategoryId, Price = SelectedProduct.Price, 
+            Quantity = 0 };
+        }
+        else
+        {
+            sellingProduct = null;
+        }
+    }
+    private void SellProduct()
+    {
+        if (string.IsNullOrEmpty(SellerName))
+        {
+            errorMessage = "Aby dokonać transakcji, należy wprowadzić nazwę sprzedającego";
+            return;
+        }
+        var product = GetProductByIdOfUseCase.Execute(sellingProduct.ProductId);
+        if(sellingProduct.Quantity==0)
+        {
+            errorMessage = "Aby dokonać transakcji, trzeba wybrać co najmniej jeden produkt";
+        }
+        else if (product.Quantity >= sellingProduct.Quantity)
+        {
+            
+            OnProductSold.InvokeAsync(sellingProduct);
+            errorMessage = string.Empty;
+            SellProductOfUseCase.Execute(SellerName,sellingProduct.ProductId, sellingProduct.Quantity.Value);
+        }
+        
+        else
+        {
+            errorMessage = $"Zostało tylko {product.Quantity} sztuk produktu {product.Name}. Nie można spełnić żądania.";
+        }
+    }
+}
