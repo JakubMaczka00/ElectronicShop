@@ -1,0 +1,15 @@
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\bin\Debug\net6.0\UseCases.deps.json
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\bin\Debug\net6.0\UseCases.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\bin\Debug\net6.0\UseCases.pdb
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\bin\Debug\net6.0\MainBusiness.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\bin\Debug\net6.0\MainBusiness.pdb
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\obj\Debug\net6.0\UseCases.csproj.AssemblyReference.cache
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\obj\Debug\net6.0\UseCases.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\obj\Debug\net6.0\UseCases.AssemblyInfoInputs.cache
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\obj\Debug\net6.0\UseCases.AssemblyInfo.cs
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\obj\Debug\net6.0\UseCases.csproj.CoreCompileInputs.cache
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\obj\Debug\net6.0\UseCases.csproj.CopyComplete
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\obj\Debug\net6.0\UseCases.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\obj\Debug\net6.0\refint\UseCases.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\obj\Debug\net6.0\UseCases.pdb
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\UseCases\obj\Debug\net6.0\ref\UseCases.dll

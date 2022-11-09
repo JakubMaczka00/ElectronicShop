@@ -1,0 +1,12 @@
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\bin\Debug\net6.0\MainBusiness.deps.json
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\bin\Debug\net6.0\MainBusiness.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\bin\Debug\net6.0\MainBusiness.pdb
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\obj\Debug\net6.0\MainBusiness.csproj.AssemblyReference.cache
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\obj\Debug\net6.0\MainBusiness.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\obj\Debug\net6.0\MainBusiness.AssemblyInfoInputs.cache
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\obj\Debug\net6.0\MainBusiness.AssemblyInfo.cs
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\obj\Debug\net6.0\MainBusiness.csproj.CoreCompileInputs.cache
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\obj\Debug\net6.0\MainBusiness.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\obj\Debug\net6.0\refint\MainBusiness.dll
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\obj\Debug\net6.0\MainBusiness.pdb
+C:\Users\Msi\source\repos\ElectronicShop\ElectronicShop\MainBusiness\obj\Debug\net6.0\ref\MainBusiness.dll
